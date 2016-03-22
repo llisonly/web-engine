@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<link rel="stylesheet" href="/static/css/core.css" />
+	<link rel="stylesheet" href="/static/css/style.css" />	
+</head>
+<body>
+	<header class="header">
+		<div class="container">
+			<div class="layout-two">
+				<div class="J_slidebar slidebar slidebar--on layout-two__left">
+					<div class="logo-wrapper">
+						<i class="c-icon logo"></i>
+						<i class="c-icon logo-info">控制台</i>
+						<a class="r outside-chain" href="">
+							<i class="c-icon"></i>
+						</a>
+					</div>
+				</div>
+				<div class="layout-two__right">
+					<a id="J_slidebar-control" class="l slidebar-control slidebar-control--off" href="javascript:;">
+						<i class="c-icon"></i>
+					</a>
+					<div class="r userbar">
+						<a class="l" href="">备案</a>
+						<a class="l" href="javascript:;">
+							<i class="c-icon u-head"></i>
+							<span class="u-name">test789@kingsoft.com</span>
+							<i class="c-icon c-icon-triangle c-icon-triangle-down--default c-icon-triangle-down--grey"></i>
+						</a>
+						<ul class="userbar-dropdown">
+							<li><a href="">退出</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="layout-two">
+			<div class="J_slidebar slidebar slidebar--on layout-two__left">
+				<div class="J_slidebar slidebar slidebar--on sidebar">
+					<nav class="nav">
+						<ul id="J_nav">							
+							<template  v-if="nav_status == 1">
+								<template v-for="menu in menus">
+									<li class="n-level-one" v-bind:class="{'n-level-one--hasSub': menu.menu}" data-menuId="{{ menu.id }}">
+										<a class="n-name" href="">
+											<i class="c-icon"></i>
+											{{ menu.verbose }}
+										</a>
+										<a class="r n-trigger" v-if="menu.menu" href="javascript:;"></a>
+									</li>
+									<li class="n-level-two dn" v-if="menu.menu" v-for="subMenu in menu.menu" data-menuId="{{ subMenu.id }}" data-parentMenuId="{{ menu.id }}">
+										<a class="n-name"  href="">
+											<i class="c-icon c-icon-opt"></i>
+											{{ subMenu.verbose }}
+										</a>
+									</li>
+								</template>
+							</template>
+							<template v-if="nav_status == 0">
+								<li class="n-level-one" v-for="menu in menus" data-menuId="{{ menu.id }}">
+									<a class="n-name" href="">
+										<i class="c-icon"></i>
+										{{ menu.verbose }}
+									</a>
+								</li>
+							</template>
+						</ul>
+					</nav>					
+				</div>
+			</div>
+			<div class="layout-two__right">
+				<div class="mainContent">
+					<div class="row">
+						<h3 class="home-title">常用项目</h3>
+						<ul id="J_projects" class="mod-list mod-list--first">
+							<template v-for=" project in projects">	
+								<li>
+									<div class="mod-box--first">
+										<div class="hd tc">
+											<span class="p-name">{{ project.name }}</span>								
+										</div>
+										<div class="bd tc">
+											<em class="p-host-count" v-bind:class="{'p-host-count--first': $index == 0,'p-host-count--second': $index == 1,'p-host-count--third': $index == 2,'p-host-count--fourth': $index == 3,'p-host-count--fifth': $index == 4}">{{ project.count.servers }}</em>
+											<span class="p-host">云主机</span>
+										</div>
+										<div class="ft clearfix">
+											<div class="l size1of2">
+												<em class="p-deploy-count">{{ project.count.groups }}</em>
+												<span class="p-deploy">分组</span>
+											</div>
+											<div class="l size1of2">
+												<em class="p-deploy-count">{{ project.count.applications }}</em>
+												<span class="p-deploy">应用</span>
+											</div>
+										</div>
+									</div>
+								</li>
+							</template>
+						</ul>
+					</div>
+					<div class="row">
+						<h3 class="home-title">资源概览</h3>
+						<ul class="mod-list mod-list--first">
+							<li>
+								<div class="mod-box--first">
+									<div class="hd tc">
+										<span class="p-name">云主机</span>								
+									</div>
+									<div class="bd tc">
+
+									</div>
+									<div class="ft clearfix">
+										<div class="l size1of2">
+											<em class="p-deploy-count">98</em>
+											<span class="p-deploy">已部署</span>
+										</div>
+										<div class="l size1of2">
+											<em class="p-deploy-count">34</em>
+											<span class="p-deploy">未部署</span>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="mod-box--first">
+									<div class="hd tc">
+										<span class="p-name">程序占用空间</span>								
+									</div>
+									<div class="bd tc">
+										
+									</div>
+									<div class="ft ft--no-split tc">
+										<span class="p-space">10/20GB</span>
+									</div>
+								</div>
+							</li>
+							<li>	
+								<div class="mod-box--first">
+									<div class="hd tc">
+										<span class="p-name">RDS</span>								
+									</div>
+									<div class="bd tc">
+										<p class="p-wait">敬请期待</p>
+									</div>							
+								</div>
+							</li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="toolbar">
+		<div class="tool-help">
+			<a href=""></a>
+		</div>
+	</div>
+	<script src="/static/js/all.js"></script>
+	<script src="/static/js/page/home/home.js"></script>
+</body>
+</html>	

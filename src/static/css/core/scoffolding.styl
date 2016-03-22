@@ -1,0 +1,352 @@
+@import 'var'
+@import 'mix'
+
+@font-face{
+	font-family: 'tg_alcefun';
+    src: url('/static/fonts/tg_alcefun.eot');
+    src: url('/static/fonts/tg_alcefun.eot?#iefix') format('embedded-opentype'), url('/static/fonts/tg_alcefun.woff') format('woff'), url('/static/fonts/tg_alcefun.ttf') format('truetype'), url('/static/fonts/tg_alcefun.svg#tg_alcefun') format('svg');
+}
+
+.flexbox
+	display -webkit-flex
+	display flex
+		
+.flexbox-vhc
+	display -webkit-flex
+	display flex
+	justify-content center
+	align-items center
+	
+.flexbox-vc
+	display -webkit-flex
+	display flex
+	align-items center
+	
+.flexbox-hc 
+	display -webkit-flex
+	display flex
+	justify-content center	
+	
+.media
+	display block
+	.media__img
+		float left
+		margin-right 10px
+	.media__body
+		overflow hidden
+
+html
+	font-size 100%
+	overflow-x hidden
+	overflow-y auto
+
+body
+	background $base-background 
+	line-height $base-line-height
+	font-family $base-font-family
+	font-size $base-font-size
+	color $base-text-color
+	
+a
+	color $link-color	
+		&:hover
+			color $link-hover-color
+			text-decoration $link-hover-decoration
+			
+for cf in 'container' 'layout-two' 'row' 'media' 'clearfix'
+	.{cf}
+		*zoom 1
+	.{cf}:before,
+	.{cf}:after
+		display table	
+		content ''
+	.{cf}:after
+		clear both
+		
+.container		
+	width 100%
+	min-width $container-width
+	
+.layout-two	
+	display -webkit-flex
+	display flex
+	flex-flow row	
+.layout-two__left	
+	width $sidebar-width-l
+.layout-two__right
+	-webkit-flex 1
+	flex 1
+	
+.sidebar
+	position fixed
+	left 0
+	top $header-height
+	z-index $zindex-page-z1	
+	width $sidebar-width-l
+	height 100%
+	background-color #323338
+	
+.mainContent
+	padding-top 50px	
+	
+.toolbar
+	position fixed
+	right 0
+	top $header-height
+	z-index $zindex-page-z0	
+	width 42px
+	height 42px	
+	overflow hidden	
+	.tool-help
+		margin-top -42px
+		width 84px
+		height 84px
+		background-color #c0c0c0
+		border-radius(42px)
+		a
+			display block
+			width 100%
+			height 100%
+			background url('/static/image/help.png') no-repeat 25% 75%
+
+.slidebar 
+	overflow hidden	
+	
+.slidebar--on
+	width $sidebar-width-l
+.slidebar--off
+	width $sidebar-width-s
+
+.header
+	.container
+		position fixed
+		left 0
+		top 0
+		z-index $zindex-page-z1
+		height $header-height
+		background-color #fff
+		box-shadow(0 0 10px 3px rgba(0,0,0,.07))
+		
+.logo-wrapper
+	height $header-height
+	background-color #ff5141	
+	
+.logo
+	margin 11px 0 0 9px
+	width 28px
+	height 28px
+	background url('/static/image/logo.png') no-repeat
+	
+.logo-info
+	margin 16px 0 0 9px
+	width 53px
+	height 18px	
+	background url('/static/image/logo_info.png') no-repeat
+	
+.outside-chain
+	@extend .flexbox-vhc
+	width 50px
+	height 50px
+	background-color #f54c3d	
+	.c-icon
+		width 14px
+		height 16px
+		background url('/static/image/outside_chain.png') no-repeat
+		transition all ease-out .1s
+	&:hover
+		.c-icon
+			width 26px
+			height 25px 
+			background url('/static/image/logo_ksc.png') no-repeat
+	
+.slidebar-control
+	@extend .flexbox-vhc
+	width 49px
+	height 50px
+	border-right 1px solid #dfdfdf	
+	&:hover
+		background-color #f7f7f7
+	.c-icon
+		width 18px
+		height 17px
+		background-image url('/static/image/shink.png')
+		background-repeat no-repeat
+		
+.slidebar-control--off
+	.c-icon
+		background-image url('/static/image/shink.png')
+
+.slidebar-control--on
+	.c-icon
+		background-image url('/static/image/expand.png')
+		
+.userbar
+	position relative
+	>a		
+		@extend .flexbox-vc
+		padding 0 19px
+		height $header-height
+		border-left 1px solid #f2f2f2
+		font-size 14px
+		color #666				
+	.u-head
+		width 32px
+		height 32px
+		background url('/static/image/user_head.png') no-repeat 50% 50% #ebebeb
+		border-radius(32px)
+	.u-name
+		display inline-block
+		margin 0 12px
+		width 120px
+		text-overflow()
+	&:hover
+		.userbar-dropdown
+			display block
+.userbar-dropdown	
+	position absolute
+	right 0
+	top $header-height
+	z-index $zindex-page-z1
+	display none
+	width 224px	
+	background #fff
+	border-width 1px 0 1px 1px
+	border-style solid
+	border-color #f2f2f2
+	>li 
+		>a
+			display block
+			padding-left 17px
+			height 50px
+			line-height 50px
+			color #666
+			
+.nav
+	padding-top 20px
+	>ul 
+		>li		
+			height 39px
+			line-height 39px
+			white-space nowrap
+		.n-name
+			display block
+			padding-left 50px
+			color #d9d9d9
+			&:hover
+				background #393a40
+	.n-level-one 
+		.n-name
+			background-color #323338
+			border-left 3px solid #323338
+	.n-level-two
+		.n-name
+			background-color #2d2d2d
+			border-left 3px solid #2d2d2d
+	.n-level-one--hasSub
+		position relative
+		.n-trigger
+			@extend .flexbox-vhc
+			position absolute
+			right 0
+			top 0
+			width 39px
+			height 39px
+			background-image url('/static/image/arrow_down_grey.png')
+			background-repeat no-repeat
+			background-position 50% 50%
+			background-color #36383d
+	.n-level-one--hasSub.n-level-one--open
+		.n-name
+			background-color #2d2d2d
+			border-left 3px solid #2d2d2d
+		.n-trigger
+			background-image url('/static/image/arrow_up_grey.png')	
+	.n--active
+		.n-name
+			background-color #262626
+			border-left 3px solid #ff5141
+			
+//.mod-list
+//.mod-list--first
+.mod-list--first
+	margin 25px 0 0 -15px
+	>li
+		float left
+		margin-left 15px
+		width 213px
+		height 240px
+			
+//mod-box
+//mod-box--first
+.mod-box--first
+	display inline-block
+	width 213px
+	height 240px
+	background-color #fff
+	border-radius(8px)
+	&:hover
+		box-shadow(0 0 10px 8px rgba(0,0,0,.07))
+	.hd 
+		height 45px
+		line-height 45px
+	.bd 
+		height 134px
+		background url('/static/image/line_interval.png') no-repeat	50% top
+	.ft 
+		height 60px
+		background-color #fafafa
+		background-position 50% 50%
+		background-image url('/static/image/line_split.png')
+		background-repeat no-repeat
+		border-top 1px solid #f2f2f2
+		border-radius(0 0 8px 8px)			
+	.ft--no-split
+		background-image none
+		line-height 60px
+	.p-name
+		font-size 18px
+		color #666
+	.p-host-count,
+	.p-host,
+	.p-deploy,
+	.p-deploy-count
+		display block
+		text-align center					
+	.p-host-count		
+		line-height 1
+		font-family 'tg_alcefun'
+		font-weight 300
+		font-size 90px
+		letter-spacing 5px
+		transform translateX(3px)
+	.p-host-count--first
+		color rgba(64,156,255,1)
+		text-shadow(0 7px 3px rgba(64,156,255,.2))	
+	.p-host-count--second
+		color rgba(60,172,255,1)
+		text-shadow(0 7px 3px rgba(60,172,255,.2))
+	.p-host-count--third
+		color rgba(56,197,255,1)
+		text-shadow(0 7px 3px rgba(56,197,255,.2))
+	.p-host-count--fourth
+		color rgba(51,221,255,1)
+		text-shadow(0 7px 3px rgba(51,221,255,.2))
+	.p-host-count--fifth
+		color rgba(47,240,255,1)
+		text-shadow(0 7px 3px rgba(47,240,255,.2))
+	.p-host
+		margin-top 7px			
+		font-size 14px
+		color #999
+	.p-deploy-count
+		margin-top 10px
+		line-height 1
+		font-size 20px
+	.p-deploy			
+		color #999
+	.p-space
+		font-size 20px
+	.p-wait
+		padding-top 70px
+		font-size 32px
+		color #808080
