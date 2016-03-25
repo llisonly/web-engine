@@ -80,25 +80,27 @@
 						<ul id="J_projects" class="mod-list mod-list--first">
 							<template v-for=" project in projects">	
 								<li>
-									<div class="mod-box--first">
-										<div class="hd tc">
-											<span class="p-name">{{ project.name }}</span>								
-										</div>
-										<div class="bd tc">
-											<em class="p-host-count" v-bind:class="{'p-host-count--first': $index == 0,'p-host-count--second': $index == 1,'p-host-count--third': $index == 2,'p-host-count--fourth': $index == 3,'p-host-count--fifth': $index == 4}">{{ project.count.servers }}</em>
-											<span class="p-host">云主机</span>
-										</div>
-										<div class="ft clearfix">
-											<div class="l size1of2">
-												<em class="p-deploy-count">{{ project.count.groups }}</em>
-												<span class="p-deploy">分组</span>
+									<a class="db" href="/view/page/projectManage/detail.html?pId={{ project.id }}">
+										<div class="mod-box--first">
+											<div class="hd tc">
+												<span class="p-name">{{ project.name }}</span>								
 											</div>
-											<div class="l size1of2">
-												<em class="p-deploy-count">{{ project.count.applications }}</em>
-												<span class="p-deploy">应用</span>
+											<div class="bd tc">
+												<em class="p-host-count" v-bind:class="{'p-host-count--first': $index == 0,'p-host-count--second': $index == 1,'p-host-count--third': $index == 2,'p-host-count--fourth': $index == 3,'p-host-count--fifth': $index == 4}">{{ project.count.servers }}</em>
+												<span class="p-host">云主机</span>
+											</div>
+											<div class="ft clearfix">
+												<div class="l size1of2">
+													<em class="p-deploy-count">{{ project.count.groups }}</em>
+													<span class="p-deploy">分组</span>
+												</div>
+												<div class="l size1of2">
+													<em class="p-deploy-count">{{ project.count.applications }}</em>
+													<span class="p-deploy">应用</span>
+												</div>
 											</div>
 										</div>
-									</div>
+									</a>
 								</li>
 							</template>
 						</ul>

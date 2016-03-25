@@ -202,7 +202,7 @@ gulp.task('server', function(){
 
     nb.service.use(function(req, res){       
         if(req.originalUrl.indexOf('api')){
-            nb.proxy.url(req, res, 'http://192.168.152.74:' + phpPort + req.originalUrl);
+            nb.proxy.url(req, res, 'http://192.168.152.7:' + phpPort + req.originalUrl);
         }
     });
 });

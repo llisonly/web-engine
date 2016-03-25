@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>	
+	<link rel="stylesheet" href="/static/css/jqx/jqx.base.css" />
+	<link rel="stylesheet" href="/static/css/core.css" />
+	<link rel="stylesheet" href="/static/css/style.css" />	
+</head>
+<body>
+	<header class="header">
+		<div class="container">
+			<div class="layout-two">
+				<div class="J_slidebar slidebar slidebar--on layout-two__left">
+					<div class="logo-wrapper">
+						<i class="c-icon logo"></i>
+						<i class="c-icon logo-info">控制台</i>
+						<a class="r outside-chain" href="">
+							<i class="c-icon"></i>
+						</a>
+					</div>
+				</div>
+				<div class="layout-two__right">
+					<a id="J_slidebar-control" class="l slidebar-control slidebar-control--off" href="javascript:;">
+						<i class="c-icon"></i>
+					</a>
+					<div class="r userbar">
+						<a class="l" href="">备案</a>
+						<a class="l" href="javascript:;">
+							<i class="c-icon u-head"></i>
+							<span class="u-name">test789@kingsoft.com</span>
+							<i class="c-icon c-icon-triangle c-icon-triangle-down--default c-icon-triangle-down--grey"></i>
+						</a>
+						<ul class="userbar-dropdown">
+							<li><a href="">退出</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="layout-two">
+			<div class="J_slidebar slidebar slidebar--on layout-two__left">
+				<div class="J_slidebar slidebar slidebar--on sidebar">
+					<nav class="nav">
+						<ul id="J_nav">							
+							<template  v-if="nav_status == 1">
+								<template v-for="menu in menus">
+									<li class="n-level-one" v-bind:class="{'n-level-one--hasSub': menu.menu}" data-menuId="{{ menu.id }}">
+										<a class="n-name" href="">
+											<i class="c-icon"></i>
+											{{ menu.verbose }}
+										</a>
+										<a class="r n-trigger" v-if="menu.menu" href="javascript:;"></a>
+									</li>
+									<li class="n-level-two dn" v-if="menu.menu" v-for="subMenu in menu.menu" data-menuId="{{ subMenu.id }}" data-parentMenuId="{{ menu.id }}">
+										<a class="n-name"  href="">
+											<i class="c-icon c-icon-opt"></i>
+											{{ subMenu.verbose }}
+										</a>
+									</li>
+								</template>
+							</template>
+							<template v-if="nav_status == 0">
+								<li class="n-level-one" v-for="menu in menus" data-menuId="{{ menu.id }}">
+									<a class="n-name" href="">
+										<i class="c-icon"></i>
+										{{ menu.verbose }}
+									</a>
+								</li>
+							</template>
+						</ul>
+					</nav>					
+				</div>
+			</div>
+			<div class="layout-two__right">
+				<div class="mainContent">
+					<div class="mainContent-hd mt20 pr50 tr">
+						<button id="J_delProject" class="k-primary" href="javascript:;">删除项目</button>
+					</div>
+					<div class="mainContent-bd ml20 mr20">
+						<div id="J_tabstrip" class="mt20">
+		                    <ul>
+		                        <li>
+		                            分组管理
+		                        </li>
+		                        <li>
+		                           	程序管理
+		                        </li>	                        
+		                    </ul>
+		                    <div>
+		                    	<div id="J_btn-group" class="btn-group mt15">
+		                    		<button id="J_add-group" class="J-btn ml5" href="javascript:;">添加分组</button>			                       
+			                        <button id="J_delete-groups" class="J-btn ml5" href="javascript:;">删除分组</button>			                        
+			                        <!-- <a id="J_delete-servers" class="J-btn ml5" href="javascript:;">删除主机</a> -->
+			                        <button id="J_deploy" class="J-btn ml5" href="javascript:;">部署</button>
+			                        <button id="J_rollback" class="J-btn ml5" href="javascript:;">回滚</button>
+		                    	</div>
+		                    	<div id="J_grid" class="mt20"></div>
+		                    </div>
+		                    <div>
+		                    	<div class="mt15">
+		                    		 程序及执行文件
+			                        <button id="J_addApp" class="J-btn" href="javascript:;">添加</button>
+			                        <button id="J_deleteApp" class="J-btn" href="javascript:;">删除</button>
+		                    	</div>
+		                    	<div id="J_appGrid" class="mt15"></div>
+		                    </div>	                    
+		                </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="toolbar">
+		<div class="tool-help">
+			<a href=""></a>
+		</div>
+	</div>
+	<div id="J_addGroupWindow">
+		<div id="windowHeader">
+            <span>
+                添加分组
+            </span>
+        </div>
+        <div id="windowContent">
+        	<!-- <form id="J_addProjectForm"> -->
+        		<table width="100%">
+	            	<tbody>
+	            		<tr>
+	            			<td>*分组名称</td>
+	            			<td>
+	            				<input id="J_group-name" class="J-text-input text-input" type="text" />
+	            			</td>
+	            		</tr>	
+	            		<tr>
+	            			<td colspan="2">
+	            				<div id="J_serverGrid"></div>
+	            			</td>
+	            		</tr>           		
+	            	</tbody>
+	            	<tfoot>
+	            		<tr>
+	            			<td colspan="2" align="center">
+	            				<button id="J_submit-addGroup" class="J-btn">确定</button>
+	            			</td>
+	            		</tr>
+	            	</tfoot>
+	            </table>
+        	<!-- </form> -->
+        </div>
+	</div>
+	<div id="J_addServerWindow">
+		<div id="windowHeader">
+            <span>
+                添加主机
+            </span>
+        </div>
+        <div id="windowContent">
+        	<div id="J_addServerGrid"></div>
+        	<button id="J_submit-addServer">确定</button>
+        </div>
+	</div>
+	<div id="J_addAppWindow">
+		<div id="windowHeader">
+            <span>
+                添加程序
+            </span>
+        </div>
+        <div id="windowContent">
+        	<!-- <form id="J_addProjectForm"> -->
+        		<table width="100%">
+	            	<tbody>
+	            		<tr>
+	            			<td>*命名</td>
+	            			<td>
+	            				<input id="J_app-name" class="J-text-input text-input" type="text" />
+	            			</td>
+	            		</tr>
+	            		<tr>
+	            			<td>程序包</td>
+	            			<td>
+	            				<div id="J_app-uploadPackage"></div>
+	            			</td>
+	            		</tr>
+	            		<tr>
+	            			<td>
+	            				版本描述
+	            			</td>
+	            			<td>
+	            				<input id="J_app-comment" class="J-text-input text-input" type="text" />
+	            			</td>	
+	            		</tr>     		
+	            	</tbody>
+	            	<tfoot>
+	            		<tr>
+	            			<td colspan="2" align="center">
+	            				<button id="J_submit-addApp" class="J-btn">确定</button>
+	            			</td>
+	            		</tr>
+	            	</tfoot>
+	            </table>
+        	<!-- </form> -->
+        </div>
+	</div>
+	<div id="J_versionManageWindow">
+		<div id="windowHeader">
+            <span>
+                版本管理
+            </span>
+        </div>
+        <div id="windowContent">        	
+        	<div id="J_versionManageGrid"></div>
+        </div>
+	</div>
+	<div id="J_versionUploadWindow">
+		<div id="windowHeader">
+            <span>
+                版本上传
+            </span>
+        </div>
+        <div id="windowContent">
+        	<table>
+        		<tbody>
+        			<tr>
+        				<td>程序包</td>
+        				<td><div id="J_version-uploadPackage"></div></td>
+        			</tr>
+        			<tr>
+        				<td>版本描述</td>
+        				<td>
+        					<input id="J_version-commment" class="J-text-input text-input" type="text" />
+        				</td>
+        			</tr>
+        		</tbody>
+        		<tfoot>
+        			<tr>
+        				<td colspan="2">
+        					<button id="J_submmit-version">确定</button>
+        				</td>
+        			</tr>
+        		</tfoot>
+        	</table>
+        </div>
+	</div>
+	<div id="J_checkAppWindow">
+		<div id="windowHeader">
+            <span>
+                选择程序
+            </span>
+        </div>
+        <div id="windowContent">
+        	<div id="J_checkAppGrid"></div>
+        </div>
+	</div>
+	<script src="/static/js/all.js"></script>	
+	<script src="/static/js/page/projectManage/detail.js"></script>
+</body>
+</html>	
