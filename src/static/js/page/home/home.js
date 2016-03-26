@@ -1,4 +1,4 @@
-require(['lib/vue/vue'], function(Vue){
+require(['lib/vue/vue', 'api/home'], function(Vue){
 	var projectVue;
 
 	function initProjectsVue(){
@@ -9,7 +9,7 @@ require(['lib/vue/vue'], function(Vue){
 			},
 			ready: function(){
 				var self = this;
-				KSC.common.getProjects()
+				KSC.home.getProjects()
 					.done(function(data){
 						self.projects = data;
 					})

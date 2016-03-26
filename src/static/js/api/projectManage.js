@@ -87,7 +87,7 @@ window.KSC = window.KSC || {};
 		//获取分组未使用的主机列表
 		getGroupOutServers: function(data){
 			data = data || {};
-			return  _.partial(KSC.api, '/deploy/api/groups/'+ data.groupId +'/out_servers/', 'post', null)();
+			return  _.partial(KSC.api, '/deploy/api/groups/'+ data.groupId +'/out_servers/', 'get', null)();
 		},
 		//删除主机
 		deleteServer: function(data){
@@ -95,6 +95,11 @@ window.KSC = window.KSC || {};
 			return _.partial(KSC.api, '/automate/api/servers/' + data.serverId + '/', 'delete', null)();
 		},
 		//批量删除主机
-		deleteServers: _.partial(KSC.api, '/automate/api/servers/remove/', 'post', null)
+		deleteServers: _.partial(KSC.api, '/automate/api/servers/remove/', 'post', null),
+		//部署
+		deployApp: function(data){
+			data = data || {};
+			return _.partial(KSC.api, '/deploy/api/applications/'+ data.appId +'/distribute/', 'get', data)();
+		}
 	};
 })();

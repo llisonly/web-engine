@@ -47,14 +47,14 @@
 							<template  v-if="nav_status == 1">
 								<template v-for="menu in menus">
 									<li class="n-level-one" v-bind:class="{'n-level-one--hasSub': menu.menu}" data-menuId="{{ menu.id }}">
-										<a class="n-name" href="">
+										<a class="n-name" href="{{ menu.href }}">
 											<i class="c-icon"></i>
 											{{ menu.verbose }}
 										</a>
 										<a class="r n-trigger" v-if="menu.menu" href="javascript:;"></a>
 									</li>
 									<li class="n-level-two dn" v-if="menu.menu" v-for="subMenu in menu.menu" data-menuId="{{ subMenu.id }}" data-parentMenuId="{{ menu.id }}">
-										<a class="n-name"  href="">
+										<a class="n-name"  href="{{ subMenu.href }}">
 											<i class="c-icon c-icon-opt"></i>
 											{{ subMenu.verbose }}
 										</a>
@@ -63,7 +63,7 @@
 							</template>
 							<template v-if="nav_status == 0">
 								<li class="n-level-one" v-for="menu in menus" data-menuId="{{ menu.id }}">
-									<a class="n-name" href="">
+									<a class="n-name" href="{{ menu.href }}">
 										<i class="c-icon"></i>
 										{{ menu.verbose }}
 									</a>
@@ -78,8 +78,8 @@
 					<div class="row">
 						<h3 class="home-title">常用项目</h3>
 						<ul id="J_projects" class="mod-list mod-list--first">
-							<template v-for=" project in projects">	
-								<li>
+							<template v-for="project in projects">	
+								<li v-if="$index<5">
 									<a class="db" href="/view/page/projectManage/detail.html?pId={{ project.id }}">
 										<div class="mod-box--first">
 											<div class="hd tc">

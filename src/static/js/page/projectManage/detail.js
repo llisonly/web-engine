@@ -56,7 +56,7 @@ require(['jqwidgets', 'api/projectManage'], function(){
             }
         });
         $('#J_checkAppWindow').jqxWindow({            
-            width: 500,           
+            width: 800,           
             height: 300, 
             autoOpen: false, 
             initContent: function(){
@@ -206,10 +206,43 @@ require(['jqwidgets', 'api/projectManage'], function(){
 		$('#J_deleteApp').on('click', deleteApp);
 		$('#J_submmit-version').on('click',saveVersion);
 		$('#J_deploy').on('click',showCheckAppWindow);
+		$('#J_rollback').on('click',showCheckAppWindow);
+		$('#J_checkAppGrid').on('focus', '.J-cappSelect', selectVersion);
+		$('#J_saveDeploy').on('click', saveDeploy);
+	}
+
+	function saveDeploy(){
+		var checkedServerRows = $('#J_grid').jqxTreeGrid('getCheckedRows');
+		var checkedApp = $('.J-capp-checkbox:checked');
+		var params = {};
+
+		params.groups = [];
+		params.servers = [];
+
+		_.each(checkedServerRows, function(ele, index){
+			if(ele.level === 0){
+				params.groups.push(ele.id);
+			}else if(ele.level === 1){
+				params.servers.push(ele.id);
+			}
+		});
+
+		if(!checkedApp.length) return alert('请选择应用');
+		checkedApp.each(function(index, ele){
+			params.appId = $(this).data('appid');
+			params.version = $('.J-cappSelect-' + params.appId).val();			
+			KSC.projectManage.deployApp(params)
+				.done(function(data){
+
+				});
+		});
 	}
 
 	function showCheckAppWindow(){
-		 $('#J_checkAppWindow').jqxWindow('open');
+		var checkedRows = $('#J_grid').jqxTreeGrid('getCheckedRows');
+		if(!checkedRows.length) return alert('请选择主机或分组');
+		$('#J_checkAppWindow').jqxWindow('open');
+		initCheckAppGrid();
 	}
 
 	function deleteGroup(e){
@@ -371,14 +404,19 @@ require(['jqwidgets', 'api/projectManage'], function(){
 	function initCheckAppGrid(){		
 		var params = {};
 		var checkboxRender = function(row, column, value){
-
+			var rowData = $('#J_checkAppGrid').jqxGrid('getrowdata', row);			
+			var html = '\
+				<input type="checkbox" class="J-capp-checkbox" data-appId="'+ rowData.id +'" />\
+			';								
+			return html;
 		};
 		
 		var operationRender = function(row, column, value){
-			var rowData = $('#J_checkAppGrid').jqxGrid('getrowdata', row);			
-			var html = '\
-				<a class="J_btn-deploy J_btn" data-appId="'+ rowData.id +'" href="javascript:;">选择</a>\
-			';								
+			var rowData = $('#J_checkAppGrid').jqxGrid('getrowdata', row);
+			var html = '<select class="J-cappSelect J-cappSelect-'+rowData.id+'" data-appId="'+rowData.id+'">\
+				<option value="'+ rowData.current_version +'" selected>'+ rowData.current_version +'</option>\
+				</select>\
+			';
 			return html;
 		};
 
@@ -393,19 +431,32 @@ require(['jqwidgets', 'api/projectManage'], function(){
 
 				var dataAdapter = new $.jqx.dataAdapter(source);
 
-				$('#J_appGrid').jqxGrid({
+				$('#J_checkAppGrid').jqxGrid({
 					width: '800px',
-					height: '400px',					
+					height: '200px',					
 					source: dataAdapter,
 					columns: [
-						{text: '勾选', cellsrenderer: checkboxRender},
-						{text: '程序名', datafield: 'name'},
-						{text: '运行版本', datafield: 'current_version'},						
-						{text: '部署时间', datafield: 'create_time'},
-						{text: '操作', cellsrenderer: operationRender}
+						{text: '勾选', width: '50px', cellsrenderer: checkboxRender},
+						{text: '程序名', width: '100px', datafield: 'name'},
+						{text: '运行版本', width: '250px', datafield: 'current_version'},
+						{text: '选择版本', width: '400px', cellsrenderer: operationRender}
 					]
 				});
 			})
+	}
+
+	function selectVersion(e){
+		var $this = $(this),
+			appId = $this.data('appid'),
+			html = '';
+		
+		KSC.projectManage.getVersions({appId: appId})
+			.done(function(data){
+				_.each(data, function(ele,index){
+					html+='<option value="'+ele.id+'">'+ele.id+'</option>';
+				});
+				$this.empty().append(html);
+			});
 	}
 
 	function showAddAppWindow(){
@@ -527,8 +578,7 @@ require(['jqwidgets', 'api/projectManage'], function(){
 		initButton();
 		initUpload();				
 		initWindow();
-		initAppGrid();
-		initCheckAppGrid();
+		initAppGrid();		
 		bindEvent();
 	}
 
